@@ -1,0 +1,5 @@
+What we have left to do:
+
+We need to create an Express API server so that it can recieve HTTP requests from the SQL set
+We need to create users.js and schedule.js to have specific quieries that call Express API to GET or POST into the MySQL relational database.
+
