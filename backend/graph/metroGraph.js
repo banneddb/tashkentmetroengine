@@ -1,5 +1,5 @@
 export function buildMetroGraph(lines) {
-    const graph = new Map()
+    const graph = new Map();
     
 
     /// function to add all stations to the undirected graph
