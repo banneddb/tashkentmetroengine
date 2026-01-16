@@ -1,5 +1,12 @@
-What we have left to do:
+1) Create and open up API endpoints for the BFS graphing algorithim so that the frontend can send HTTPS requets
 
-We need to create an Express API server so that it can recieve HTTP requests from the SQL set
-We need to create users.js and schedule.js to have specific quieries that call Express API to GET or POST into the MySQL relational database.
+2) Confirm that HTTPS requests are valid and valid stations are being requested to be retireved from DB
 
+3) Confirm that Express API is being hosted properly
+
+
+4) Confirm that the DB calls are being properly processed and the graph is being constructed correctly 
+
+5) Display the graph to user using React
+
+6) Initialize wayfinding and BFS for the user.
