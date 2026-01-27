@@ -34,14 +34,14 @@ The system is intentionally split into **three layers**:
 
 ```text
 +-------------+        HTTP Request        +------------------+
-|  Frontend   |  ---------------------->  |   Express API    |
+|  Frontend   |  ---------------------->   |   Express API    |
 | (Planned)   |                            |  (Node.js)       |
 +-------------+                            +---------+--------+
                                                           |
                                                           | Query
                                                           v
                                               +-----------+-----------+
-                                              |        MySQL DB        |
+                                              |        MySQL DB       |
                                               |  Stations / Lines /   |
                                               |     Connections       |
                                               +-----------+-----------+
@@ -56,7 +56,7 @@ The system is intentionally split into **three layers**:
                                                           | Route Result
                                                           v
 +-------------+        JSON Response       +------------------+
-|  Frontend   |  <----------------------  |   Express API    |
+|  Frontend   |  <----------------------   |   Express API    |
 | (Planned)   |                            |                  |
 +-------------+                            +------------------+
 ```
@@ -64,11 +64,6 @@ The system is intentionally split into **three layers**:
 ---
 
 ## 🗄️ Database Design (MySQL)
-
-The database represents the **metro network topology** and includes **all of the lines of Tashkent Metro**.
-
-### Core Concepts
-
 * **Stations** → nodes in the graph
 * **Connections** → edges between stations
 * **Lines** → metadata used for future transfer logic
@@ -80,16 +75,17 @@ Stations(id, name, line)
 Connections(station_a, station_b)
 ```
 
-This schema allows the backend to dynamically build an **adjacency list** for graph traversal.
+This schema allows the backend to build an **adjacency list** for graph traversal dynamically.
 
 ---
 
 ## ⚙️ Backend Architecture
 
 **Stack:**
-
+* React.js (planned)
 * Node.js
 * Express
+* SQL
 * MySQL
 
 ### Key Responsibilities
@@ -111,33 +107,4 @@ This schema allows the backend to dynamically build an **adjacency list** for gr
 
 > Future versions will introduce **weighted routing** (e.g. transfer penalties, travel time).
 
----
-
-## 🧮 Algorithm Logic (Current)
-
-```text
-1. Query all stations and connections from DB
-2. Build adjacency list (graph)
-3. Initialize BFS queue with start station
-4. Track visited stations + parent pointers
-5. Stop when destination is reached
-6. Reconstruct route by backtracking
-```
-
-This mirrors how real transit systems compute routes internally.
-
----
-
-## 🌱 Planned Enhancements
-
-* 🔁 **Transfer-aware routing** (weighted graph / Dijkstra)
-* ⏱️ Travel time optimization
-* 🧭 Line-change penalties
-* 🌐 Frontend route visualizer
-* 📦 API versioning & error handling
-
----
-
-## 🚀 Why This Project Matters
-
-This
+--
