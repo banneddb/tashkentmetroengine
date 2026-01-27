@@ -4,7 +4,7 @@ A **backend-driven metro routing engine** that models the Tashkent Metro system 
 
 This project focuses on **systems thinking, algorithms, and backend architecture**. It is designed to demonstrate how real-world transit systems can be modeled, queried, and exposed via clean APIs.
 
-> ⚠️ **Project Status:** In progress
+> **Project Status:** In progress
 > * MySQL schema and Node.js async queries designed and hosted 
 > * Core routing logic implemented using **BFS**
 > * Transfer weighting and time-based optimization planned
@@ -12,7 +12,7 @@ This project focuses on **systems thinking, algorithms, and backend architecture
 
 ---
 
-## 🎯 Project Goals
+## Project Goals
 
 * Model a real metro system as a **graph** (stations + connections)
 * Implement **route-finding algorithms** (starting with BFS)
@@ -22,7 +22,7 @@ This project focuses on **systems thinking, algorithms, and backend architecture
 
 ---
 
-## 🧠 High-Level System Design
+## High-Level System Design
 
 The system is intentionally split into **three layers**:
 
@@ -63,7 +63,7 @@ The system is intentionally split into **three layers**:
 
 ---
 
-## 🗄️ Database Design (MySQL)
+## Database Design (MySQL)
 * **Stations** → nodes in the graph
 * **Connections** → edges between stations
 * **Lines** → metadata used for future transfer logic
@@ -79,8 +79,6 @@ This schema allows the backend to build an **adjacency list** for graph traversa
 
 ---
 
-## ⚙️ Backend Architecture
-
 **Stack:**
 * React.js (planned)
 * Node.js
@@ -88,23 +86,3 @@ This schema allows the backend to build an **adjacency list** for graph traversa
 * SQL
 * MySQL
 
-### Key Responsibilities
-
-* Fetch metro data from the database
-* Build an **in-memory graph representation**
-* Execute routing algorithms
-* Return routes via REST endpoints
-
-### Routing Engine
-
-* Uses **Breadth-First Search (BFS)**
-* Guarantees the **minimum number of stops**
-* Clean separation between:
-
-  * Data fetching
-  * Graph construction
-  * Algorithm execution
-
-> Future versions will introduce **weighted routing** (e.g. transfer penalties, travel time).
-
---
