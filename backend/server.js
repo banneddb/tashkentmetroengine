@@ -1,5 +1,6 @@
 import express from "express";
 import cors from "cors";
+import { buildSegments } from "./graph/routeSegments.js";
 
 import { getAllLinesWithStations, getStationsOnLine } from "./database/metroData.js";
 import { buildMetroGraph } from "./graph/metroGraph.js";
@@ -21,6 +22,7 @@ async function refreshTopology() {
 }
 
 await refreshTopology();
+console.log(JSON.stringify(linesCache, null, 2));
 
 // ---- Endpoints ----
 
@@ -56,22 +58,28 @@ app.get("/lines/:lineId/stations", async (req, res) => {
 
 // Route endpoint (fewest stops)
 app.get("/route", (req, res) => {
-  try {
-    const from = Number(req.query.from);
-    const to = Number(req.query.to);
+  const from = Number(req.query.from);
+  const to = Number(req.query.to);
 
-    if (!Number.isInteger(from) || !Number.isInteger(to)) {
-      return res
-        .status(400)
-        .json({ error: "Query params 'from' and 'to' must be integers" });
-    }
-
-    const result = findRouteBFS(graph, from, to);
-    res.json(result);
-  } catch (err) {
-    res.status(500).json({ error: "Failed to compute route" });
+  if (!Number.isInteger(from) || !Number.isInteger(to)) {
+    return res.status(400).json({ error: "from and to must be integers" });
   }
+
+  const raw = findRouteBFS(graph, from, to);
+  if (raw.stops === -1) return res.json(raw);
+
+  console.log(raw);
+  const { transfers, segments } = buildSegments(graph, raw.stationPathIds, raw.stepLineIds);
+
+  return res.json({
+    from,
+    to,
+    stops: raw.stops,
+    transfers,
+    segments
+  });
 });
+
 
 // Optional: manual refresh if DB changes
 app.post("/refresh", async (req, res) => {

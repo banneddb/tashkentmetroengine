@@ -10,7 +10,7 @@ export function findRouteBFS(graph, startStationID, destinationStationID) {
 
     // invalid station
     if (!graph.has(startStationID) || !graph.has(destinationStationID)) {
-        return {parth: [], stops: -1}
+        return {path: [], stops: -1}
     }
 
     // BFS queue and log all visitedStations
@@ -44,14 +44,21 @@ export function findRouteBFS(graph, startStationID, destinationStationID) {
                     path.push(cur);
                     cur = parent.get(cur);
                   }
-          
-                  path.reverse();
-                  const detailedPath = path.map((id) => ({
-                    stationId: id,
-                    name: graph.get(id)?.name
-                  }));
+                  const stepLineIds = [];
+
                   
-                  return { path: detailedPath, stops: detailedPath.length - 1 };
+                  for (let i = 1; i < path.length; i++) {
+                  const toId = path[i];
+                  stepLineIds.push(parentLine.get(toId));
+                  }
+
+                  path.reverse();
+                  
+                  return {
+                    stationPathIds: path,
+                    stepLineIds,
+                    stops: path.length-1
+                  }
                   
                 }
           
